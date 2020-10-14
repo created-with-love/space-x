@@ -1,6 +1,9 @@
 import React from 'react';
+// добавляем библиотеку для того, что бы анимировать ракету
+import RellaxWrapper from 'react-rellax-wrapper';
 import './features.css';
-import falcon from '../../img/falcon-1.png' 
+import falcon from '../../img/falcon-1.png';
+
 
 const Features = () => (
     <section className="features">
@@ -32,12 +35,15 @@ const Features = () => (
 					</tr>
 				</thead>
 			</table>
-			<img
+
+			<RellaxWrapper speed={14}>
+				<img
 					src={falcon}
 					alt="rocket"
-					className="rocket"
-					data-rellax-speed="14"
-			/>
+					className="rocket"	
+				/>
+			</RellaxWrapper>
+	
 			<article>
 				<h3 className="features-subtitle">DESCRIPTION</h3>
 				<p className="features-text">

@@ -3,7 +3,7 @@ import './calendar.css';
 
 const Calendar = () => (
 	<>
-	    <section className="main">
+	<section className="main">
 		<h1 className="title">
 			Calendar SpaceX
 		</h1>
