@@ -30,7 +30,7 @@ class App extends React.Component {
   // метод жизненного цикла компонента. Did - работает после рендера, Will - после
   componentDidMount() {
     this.updateRocket();
-    
+   
   }
 
   // метод для обновления данных по ракете
@@ -58,6 +58,7 @@ class App extends React.Component {
   // в ретурне должен быть только 1 общий родитель иначе будет ошибка
   render() {
     console.log(this.state)
+
     return (
       // обёртка родитель. Делаем её фрагментом, что бы не отображть ее в конечной верстке как лишний элемент
       // сокращенная версия React.Fragment - пустые скобки <>
@@ -69,8 +70,8 @@ class App extends React.Component {
         <Main rocket={this.state.rocket} />
         
         {/* ДЗ - передать рокетфичерс в фичерс и заполнить данные о ракетах */}
-        <Features />
-        <Footer />
+        <Features rocketFeatures={this.state.rocketFeatures}/>
+        <Footer data={this.fetchData.getCompany().then(data => data)}/>
       </React.Fragment>
     
     );
