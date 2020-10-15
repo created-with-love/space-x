@@ -1,14 +1,10 @@
 import React from 'react';
 import './details.css';
+import Main from '../Main/Main';
 
 const Details = () => (
     <>
-        <section className="main">
-		<h1 className="title">
-			FalconSat
-		</h1>
-	    </section>
-
+        <Main />
 	    <main className="details">
 		<div className="container">
 			<div className="details-row">

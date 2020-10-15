@@ -2,7 +2,8 @@ import React from 'react';
 // добавляем библиотеку для того, что бы анимировать ракету
 import RellaxWrapper from 'react-rellax-wrapper';
 import './features.css';
-import falcon from '../../img/falcon-1.png';
+
+// import falcon from '../../img/falcon-1.png';
 
 
 const images = {
@@ -12,13 +13,19 @@ const images = {
 	other: "starship",
 }
 
-const Features = ({ rocketFeatures }) => {
-	if (!rocketFeatures) return '';
+const Features = ({
+	name,
+	height,
+	diameter,
+	mass,
+	payload_weights: pyloadWeights,
+	description }) => {
 
 	return (
-		<section className="features">
+		<>
+	<section className="features">
 			<h2 className="features-title">
-				{rocketFeatures.name} <br />Overview
+				{name} <br />Overview
 		</h2>
 			<div className="overview">
 
@@ -30,20 +37,26 @@ const Features = ({ rocketFeatures }) => {
 					
 						<tr> 
 					  	<td className="table-column">HEIGHT</td>
-					  	<td className="table-column">{rocketFeatures.height.meters} m / {rocketFeatures.height.feet} ft</td>
+					  	<td className="table-column">{height.meters} m / {height.feet} ft</td>
 					  </tr>
 					  <tr>
 					  	<td className="table-column">DIAMETER</td>
-					  	<td className="table-column">{rocketFeatures.diameter.meters} m / {rocketFeatures.diameter.feet} ft</td>
+					  	<td className="table-column">{diameter.meters} m / {diameter.feet} ft</td>
 					  </tr>
 					  <tr>
 					  	<td className="table-column">MASS</td>
-					  	<td className="table-column">{rocketFeatures.mass.kg} kg / {rocketFeatures.mass.lb} lb</td>
+					  	<td className="table-column">{mass.kg} kg / {mass.lb} lb</td>
 					  </tr>
-					  <tr>
-					  	<td className="table-column">PAYLOAD TO LEO</td>
-					  	<td className="table-column">{rocketFeatures.payload_weights[0].kg} kg / {rocketFeatures.payload_weights[0].lb} lb</td> 
-							</tr>
+						
+						{/* у некоторых ракет несколько вариантов полёта, так что делаем перебор для того, что бы захватить все варинаты */}
+						{pyloadWeights.map((item) => (
+							<tr key={item.id}>
+								<td className="table-column">PAYLOAD TO {item.id.toUpperCase()}</td>
+					  			<td className="table-column">{item.kg} kg / {item.lb} lb</td> 
+					  		</tr>
+							
+						))}
+					
 
 					</thead>
 				</table>
@@ -51,11 +64,11 @@ const Features = ({ rocketFeatures }) => {
 			
 				<RellaxWrapper speed={14}>
 					<img
-						src={`./img/${images.hasOwnProperty(rocketFeatures.name)
-								? images[rocketFeatures.name]
-								: images.other
-							}.png`}
-	
+						src={`../../img/${images.hasOwnProperty(name)
+							? images[name]
+							: images.other}.png`}
+						
+
 						alt="rocket"
 						className="rocket"
 					/>
@@ -64,11 +77,12 @@ const Features = ({ rocketFeatures }) => {
 				<article>
 					<h3 className="features-subtitle">DESCRIPTION</h3>
 					<p className="features-text">
-						{rocketFeatures.description}
+						{description}
 				</p>
 				</article>
 			</div>
 		</section>
+	</>
 	);
 };
 

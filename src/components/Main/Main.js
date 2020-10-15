@@ -13,17 +13,17 @@ const Main = ({ rocket }) => (
 	<section className="main">  
 		<h1 className="title">
 			{/* динамический тайтл, принимает пропс c App.js  */}
-			{rocket}
+			{rocket ? rocket : 'SpaceX Calendar'}
 		</h1>
 
-		<div className="video-container">
+	{rocket &&	<div className="video-container">
 			<video className="video"
 				autoPlay loop muted
 				src={`./video/${video.hasOwnProperty(rocket) ?
 					video[rocket] :
 					video.other}.mp4`}
 			/>
-		</div>
+		</div>}
 	</section>
 )
 

@@ -1,12 +1,17 @@
 import React from 'react';
+// подключаем нужные компоненты и методы с реакт-роутер-дом для роутинга
+import { BrowserRouter, Route } from 'react-router-dom'
 
 // дефаулт-импорт
 import Header from './components/Header/Header';
+import Home from './components/Home/Home';
 import Main from './components/Main/Main';
 import Features from './components/Features/Features';
 import Footer from './components/Footer/Footer';
 import FetchData from './service/FetchData';
 
+import Calendar from './components/Calendar/Calendar';
+import Details from './components/Details/Details';
 
 // импорт стилей
 import './style.css';
@@ -25,12 +30,13 @@ class App extends React.Component {
     rocket: "Falcon 1",
     rocketFeatures: null,
     rockets: [],
+    company: null,
   }
 
   // метод жизненного цикла компонента. Did - работает после рендера, Will - после
   componentDidMount() {
     this.updateRocket();
-   
+    this.updateCompany();
   }
 
   // метод для обновления данных по ракете
@@ -53,26 +59,54 @@ class App extends React.Component {
       rocket
     }, this.updateRocket);
   }
+  
+  updateCompany = () => {
+    // получаем данные от сервера и с помощью then их обрабатываем
+    this.fetchData.getCompany()
+      .then(company => this.setState({ company }))
+    // указали company, что бы данные записались именно в state => company и не добавились все ненужные свойства в наш стейт
+  }
 
 
   // в ретурне должен быть только 1 общий родитель иначе будет ошибка
   render() {
-    console.log(this.state)
+    // console.log(this.state)
 
     return (
       // обёртка родитель. Делаем её фрагментом, что бы не отображть ее в конечной верстке как лишний элемент
-      // сокращенная версия React.Fragment - пустые скобки <>
-      <React.Fragment>
+      // сокращенная версия React.Fragment - пустые скобки <> позже его заменил на BrowserRoute для слежения
+      <BrowserRouter>
         {/* вставляю импортированный файлы с версткой */}
-        <Header rockets={this.state.rockets} changeRocket={this.changeRocket}/>
+         <Header rockets={this.state.rockets} changeRocket={this.changeRocket}/>
+        {/* делаем первой отображаемой страницей Home */}
+        {/* exact - жесткая привязка к пути в url */}
+        <Route exact path='/'>
+              {this.state.company && <Home company={this.state.company}/>}
+        </Route>
 
-        {/* добавляем пропс rocket, что бы при смене ракеты в state менять тайтл в файле Main.js */}
-        <Main rocket={this.state.rocket} />
         
-        {/* ДЗ - передать рокетфичерс в фичерс и заполнить данные о ракетах */}
-        <Features rocketFeatures={this.state.rocketFeatures}/>
-        <Footer data={this.fetchData.getCompany().then(data => data)}/>
-      </React.Fragment>
+        <Route path='/rocket'>
+            {/* добавляем пропс rocket, что бы при смене ракеты в state менять тайтл в файле Main.js */}
+            <Main rocket={this.state.rocket} />
+        
+            {/* ДЗ - передать рокетфичерс в фичерс и заполнить данные о ракетах */}
+            {/* делаем условие, что верстка будет рендериться только если данные получены */}
+            {/* так же сразу деструктуризируем значения с рокет фичерс */}
+            {this.state.rocketFeatures && <Features {...this.state.rocketFeatures} />}
+        </Route>
+
+        <Route path='/calendar'>
+          <Calendar/>
+        </Route>
+        
+        <Route path='/details'>
+          <Details />
+        </Route>
+
+
+        {/* если данные с сервера загрузились - передаем деструктуризированные ссылки на все соц.сети в футер */}
+        {this.state.company && <Footer {...this.state.company}/>}
+      </BrowserRouter>
     
     );
   }
