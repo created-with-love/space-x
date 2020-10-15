@@ -2,8 +2,10 @@ import React from 'react';
 import './footer.css'
 import logo from '../../logo.svg'
 
-const Footer = () => (
-    <footer className="footer">
+const Footer = (data) => {
+
+
+    return (<footer className="footer">
 		<img src={logo} alt="logo Space X" className="logo" />
 		<nav className="footer-nav">
 			<ul className="list">
@@ -20,7 +22,7 @@ const Footer = () => (
 			>
 		</p>
 
-	</footer>
-);
+	</footer>)
+};
 
 export default Footer;
