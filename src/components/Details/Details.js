@@ -1,10 +1,17 @@
 import React from 'react';
 import './details.css';
 import Main from '../Main/Main';
+import { Link } from 'react-router-dom';
+
+// функция для возврата на предыдущую страницу браузера для кнопки "Назад"
+function goBack() {
+	window.history.back();
+}
 
 const Details = () => (
     <>
-        <Main />
+		<Main />
+		
 	    <main className="details">
 		<div className="container">
 			<div className="details-row">
@@ -16,10 +23,10 @@ const Details = () => (
 				</div>
 			</div>
 			<div>
-				<iframe className="details-youtube" width="560" height="315" src="https://www.youtube.com/embed/dLQ2tZEH6G0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				<iframe title='title' className="details-youtube" width="560" height="315" src="https://www.youtube.com/embed/dLQ2tZEH6G0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 			</div>
 		</div>
-		<a href="calendar.html" className="button button-back">go back</a>
+			<Link onClick={goBack} className="button button-back">go back</Link>
 	    </main>
     </>
 );

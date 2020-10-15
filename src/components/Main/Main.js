@@ -11,10 +11,10 @@ const video = {
 
 const Main = ({ rocket }) => (
 	<section className="main">  
-		<h1 className="title">
-			{/* динамический тайтл, принимает пропс c App.js  */}
-			{rocket ? rocket : 'SpaceX Calendar'}
-		</h1>
+		{/*  динамический тайтл, принимает пропс c App.js   */}
+		<h1 className="title">{
+			rocket ? rocket : 'SpaceX Calendar'
+		}</h1>
 
 	{rocket &&	<div className="video-container">
 			<video className="video"
