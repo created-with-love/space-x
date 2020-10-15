@@ -2,6 +2,7 @@ import React from 'react';
 // все стили идут отдельными файлами для оптимизации - когда элемент не отображается, его стили не загружаются
 import './main.css';
 
+
 const video = {
 	"Falcon 1": "moon",
 	"Falcon 9": "earth",
@@ -10,13 +11,16 @@ const video = {
 }
 
 const Main = ({ rocket }) => (
+
 	<section className="main">  
 		{/*  динамический тайтл, принимает пропс c App.js   */}
-		<h1 className="title">{
-			rocket ? rocket : 'SpaceX Calendar'
+		<h1 className="title">{			
+				rocket
+					? rocket
+					: 'SpaceX Calendar'
 		}</h1>
 
-	{rocket &&	<div className="video-container">
+		{rocket &&	<div className="video-container">
 			<video className="video"
 				autoPlay loop muted
 				src={`./video/${video.hasOwnProperty(rocket) ?
@@ -25,6 +29,7 @@ const Main = ({ rocket }) => (
 			/>
 		</div>}
 	</section>
+	
 )
 
 export default Main;
