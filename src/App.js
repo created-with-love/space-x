@@ -82,19 +82,21 @@ class App extends React.Component {
         {/* exact - жесткая привязка к пути в url */}
         <Route
           exact path='/'
-          render={() => this.state.company &&
-            <Home company={this.state.company} />} />
+          render={(props) => {
+            console.log(props)
+            return this.state.company &&
+              <Home company={this.state.company} />
+          }} />
     
 
         <Route
           path='/rocket/:rocket'
-          render={({match}) => this.state.rocketFeatures &&
-            <Features {...this.state.rocketFeatures} match={match} />} />
+          render={() => this.state.rocketFeatures &&
+            <Features {...this.state.rocketFeatures} />} />
             {/* добавляем пропс rocket, что бы при смене ракеты в state менять тайтл в файле Main.js */}
             {/* делаем условие, что верстка будет рендериться только если данные получены */}
             {/* так же сразу деструктуризируем значения с рокет фичерс */}
   
-
         {/* вариант подключения через атрибут компонента  */}
         <Route path='/calendar' component={Calendar} />   
 

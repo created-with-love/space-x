@@ -19,15 +19,17 @@ const Header = (props) => (
 		<nav className="main-nav nav">
 			<ul className="list">
 				{/* строим список с ракетами с пропсов */}
-				{props.rockets.map((rocket, i) => ( 
-					<li key={i} className="item">
+				{props.rockets.map((item, index) => ( 
+					<li key={index} className="item">
 						<Link 
-							to={`/rocket/${rocket.replace(' ', '_')}`}
+							to={item}
+							to={`/rocket/${item.replace(' ', '_')}`}
+							// to={rocket}
 							onClick={() => {
-								props.changeRocket(rocket);
+								props.changeRocket(item);
 							}}
 							className="item-link">
-							{rocket}</Link>
+							{item}</Link>
 					</li>
 				))}
 			</ul>

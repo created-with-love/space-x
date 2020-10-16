@@ -11,22 +11,20 @@ const video = {
 }
 
 const Main = ({ rocket, name }) => (
-
 	<section className="main">  
 		{/*  динамический тайтл, принимает пропс c App.js   */}
-		<h1 className="title">{name || rocket}</h1>
+		<h1 className="title">{ name || rocket }</h1>
 
-		{rocket &&	<div className="video-container">
+		{rocket && <div className="video-container">
 			<video
 				className="video"
 				autoPlay loop muted
 				src={`./video/${video.hasOwnProperty(rocket) ?
-					video[rocket] : video.other}.mp4`
-				}
+					video[rocket] : video.other}.mp4`}
 			/>
 		</div>}
 	</section>
 	
-)
+	)
 
 export default Main;
