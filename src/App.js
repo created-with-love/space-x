@@ -5,7 +5,6 @@ import { BrowserRouter, Route } from 'react-router-dom'
 // дефаулт-импорт
 import Header from './components/Header/Header';
 import Home from './components/Home/Home';
-import Main from './components/Main/Main';
 import Features from './components/Features/Features';
 import Footer from './components/Footer/Footer';
 import FetchData from './service/FetchData';
@@ -77,32 +76,30 @@ class App extends React.Component {
       // сокращенная версия React.Fragment - пустые скобки <> позже его заменил на BrowserRoute для слежения
       <BrowserRouter>
         {/* вставляю импортированный файлы с версткой */}
-         <Header rockets={this.state.rockets} changeRocket={this.changeRocket}/>
+        <Header rockets={this.state.rockets} changeRocket={this.changeRocket} />
+        
         {/* делаем первой отображаемой страницей Home */}
         {/* exact - жесткая привязка к пути в url */}
-        <Route exact path='/'>
-              {this.state.company && <Home company={this.state.company}/>}
-        </Route>
+        <Route
+          exact path='/'
+          render={() => this.state.company &&
+            <Home company={this.state.company} />} />
+    
 
-        
-        <Route path='/rocket'>
+        <Route
+          path='/rocket/:rocket'
+          render={({match}) => this.state.rocketFeatures &&
+            <Features {...this.state.rocketFeatures} match={match} />} />
             {/* добавляем пропс rocket, что бы при смене ракеты в state менять тайтл в файле Main.js */}
-            <Main rocket={this.state.rocket} />
-        
-            {/* ДЗ - передать рокетфичерс в фичерс и заполнить данные о ракетах */}
             {/* делаем условие, что верстка будет рендериться только если данные получены */}
             {/* так же сразу деструктуризируем значения с рокет фичерс */}
-            {this.state.rocketFeatures && <Features {...this.state.rocketFeatures} />}
-        </Route>
+  
 
-        <Route path='/calendar'>
-          <Calendar/>
-        </Route>
-        
-        <Route path='/details'>
-          <Details />
-        </Route>
+        {/* вариант подключения через атрибут компонента  */}
+        <Route path='/calendar' component={Calendar} />   
 
+        {/* /:id - принимаем айди при переходе на каждый полёт для создания такого свойства в пропс*/}
+        <Route path='/details/:id' component={Details} />
 
         {/* если данные с сервера загрузились - передаем деструктуризированные ссылки на все соц.сети в футер */}
         {this.state.company && <Footer {...this.state.company}/>}

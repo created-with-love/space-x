@@ -1,76 +1,55 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import useLaunches from '../useLaunches/useLaunches';
+import { Link, useHistory } from 'react-router-dom';
+import Youtube from 'react-youtube';
 import './details.css';
 // import Main from '../Main/Main';
-import { Link } from 'react-router-dom';
-import FetchData from '../../service/FetchData';
 
-const fetchData = new FetchData();
+import Main from '../Main/Main';
+import YouTube from 'react-youtube';
+
 
 
 
 // функция для возврата на предыдущую страницу браузера для кнопки "Назад"
-function goBack() {
-	window.history.back();
-}
+const Details = (props) => {
 
-const Details = () => {
+	const [launch, setLaunch] = useState(null);
+	const { getLaunch } = useLaunches();
 
-		// деструктурируем и получаем данные и функцию
-	const [data, setData] = useState([]); 
-	console.log(data)
-
-	// useEffect нужен для побочных эффектов, для работы с данными от сервера например
-	// второй параметр пустого массива передан для того, что бы функция Setdata не вызывалась постоянно
+	// вытаскиваем один запуск ракеты 
 	useEffect(() => {
-		fetchData.getLaunches()
-			.then(launches => setData(state => [...launches]))
-	}, [])
-	return (
-			<>
-		{/* <Main /> */}
-			
-		
-			
-		{data.map(item => {
-			
-		return (
-			<>
-				
-				<section className="main">  
-					<h1 className="title">{	item.name }</h1>
-				</section>
+		setLaunch(getLaunch(props.match.params.id))
+	}, [getLaunch] )
 
-				<main className="details" key={item.id}>
-				
+	const history = useHistory();
+	console.log(launch)
+
+	if(!launch) return <div>Loading, please wait...</div>
+
+	return (
+		<>
+			<Main name={launch.name}/>	
+	
+			<main className="details">
 					
 				<div className="container">
 					<div className="details-row">
 						<div className="details-image">
-							<img src={item.links.patch.small} alt="" />
+							<img src={launch.links.patch.small} alt={launch.name} />
 						</div>
 						<div className="details-content">
-							<p className="details-description">{item.details}</p>
+							<p className="details-description">{launch.details}</p>
 						</div>
 					</div>
-					<div>
-							<iframe title='title'
-								className="details-youtube"
-								width="560" height="315"
-								src={item.links.webcast}
-								frameborder="0"
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-								allowfullscreen>
-							</iframe>
-					</div>
+
+						<YouTube className='details-youtube' videoId={launch.links.youtube_id}/>
+
 				</div>
-					<Link onClick={goBack} to={{}} className="button button-back">go back</Link>
-	    		</main>
-			</>
-		)
-		})}
-			
-    </>
-   )
-};
+					<Link onClick={history.goBack} className="button button-back">go back</Link>
+			</main>
+				
+		</>
+	)};
 
 export default Details;

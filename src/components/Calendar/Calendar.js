@@ -1,31 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import './calendar.css';
+import useLaunches from '../useLaunches/useLaunches'
 import Main from '../Main/Main';
-import FetchData from '../../service/FetchData';
 
-const fetchData = new FetchData();
 
 const Calendar = () => {
-	
-	// хуки - прекрасны тем, что можно использовать состояния без использования классов и стейтов и пропсов
 
+	const { data } = useLaunches();
 
-	// деструктурируем и получаем данные и функцию
-	const [data, setData] = useState([]); 
-
-
-	// useEffect нужен для побочных эффектов, для работы с данными от сервера например
-	// второй параметр пустого массива передан для того, что бы функция Setdata не вызывалась постоянно
-	useEffect(() => {
-		fetchData.getLaunches()
-			.then(launches => setData(state => [...launches]))
-	}, [])
-
-	// console.log(data)
 	return (
 		<>
-			<Main />
+			<Main name='SpaceX Launches'/>
 			<section className="calendar">
 				<div className="container">
 					<ul className="calendar-list">
@@ -43,11 +29,7 @@ const Calendar = () => {
 											<h2 className="launches-title">{item.name}</h2>
 											
 											<Link
-												to={{
-													pathname: "/details",
-													state: {title: `${item.name}`,}
-												}}
-												
+												to={`/details/${item.id}`}		
 												className="button launches-details"
 											>Подробнее</Link>
 										</div>

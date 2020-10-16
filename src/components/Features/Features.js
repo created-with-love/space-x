@@ -2,6 +2,8 @@ import React from 'react';
 // добавляем библиотеку для того, что бы анимировать ракету
 import RellaxWrapper from 'react-rellax-wrapper';
 import './features.css';
+import Main from '../Main/Main';
+
 
 // import falcon from '../../img/falcon-1.png';
 
@@ -13,16 +15,20 @@ const images = {
 	other: "starship",
 }
 
-const Features = ({
-	name,
-	height,
-	diameter,
-	mass,
-	payload_weights: pyloadWeights,
-	description }) => {
+const Features = (props) => {
 
+	const {
+		name,
+		height,
+		diameter,
+		mass,
+		payload_weights: pyloadWeights,
+		description } = props;
+	
+	
 	return (
 		<>
+	<Main rocket={name} />
 	<section className="features">
 			<h2 className="features-title">
 				{name} <br />Overview

@@ -22,7 +22,7 @@ const Header = (props) => (
 				{props.rockets.map((rocket, i) => ( 
 					<li key={i} className="item">
 						<Link 
-							to='/rocket'
+							to={`/rocket/${rocket.replace(' ', '_')}`}
 							onClick={() => {
 								props.changeRocket(rocket);
 							}}
@@ -43,7 +43,7 @@ const Header = (props) => (
 					>Home</NavLink>
 				</li>
 				<li className="item">
-					<NavLink exact to="calendar"
+					<NavLink exact to="/calendar"
 						className="item-link"
 						activeClassName="active"
 					>Calendar</NavLink>
