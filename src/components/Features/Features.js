@@ -3,14 +3,16 @@ import React from 'react';
 import RellaxWrapper from 'react-rellax-wrapper';
 import './features.css';
 import Main from '../Main/Main';
-
-// import falcon from '../../img/falcon-1.png';
+import falcon1 from '../../img/falcon-1.png';
+import falcon9 from '../../img/falcon-9.png';
+import falconHeavy from '../../img/falcon-heavy.png';
+import starship from '../../img/starship.png';
 
 const images = {
-  'Falcon 1': 'falcon-1',
-  'Falcon 9': 'falcon-9',
-  'Falcon Heavy': 'falcon-heavy',
-  other: 'starship',
+  'Falcon 1': falcon1,
+  'Falcon 9': falcon9,
+  'Falcon Heavy': falconHeavy,
+  other: starship,
 };
 
 const Features = props => {
@@ -70,9 +72,9 @@ const Features = props => {
 
           <RellaxWrapper speed={14}>
             <img
-              src={`../../img/${
+              src={`${
                 images.hasOwnProperty(name) ? images[name] : images.other
-              }.png`}
+              }`}
               alt="rocket"
               className="rocket"
             />
